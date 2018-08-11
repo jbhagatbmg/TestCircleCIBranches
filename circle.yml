@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp -o "StrictHostKeyChecking no" $SSH_USER@$SSH_HOST "git pull && dotnet build | tee /tmp/logging.txt"
+            scp -o "StrictHostKeyChecking no" -p $PORT $SSH_USER@$SSH_HOST "git pull && dotnet build | tee /tmp/logging.txt"
 test:
   - run: dotnet restore
   - run: dotnet build
