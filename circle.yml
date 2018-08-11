@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - Dev-Beta
+    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
+      - image: microsoft/dotnet:2.1-runtime-deps-stretch-slim
+    steps:
+      - checkout
+test:
+  - run: dotnet restore
+  - run: dotnet build
+  - run: dotnet test
