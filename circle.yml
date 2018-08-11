@@ -8,6 +8,17 @@ jobs:
       - image: microsoft/dotnet:2.1-runtime-deps-stretch-slim
     steps:
       - checkout
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "be:56:42:5a:93:a3:c6:ef:8f:d2:77:5f:b7:9d:49:a3"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            scp -o "StrictHostKeyChecking no" $SSH_USER@$SSH_HOST "git pull && dotnet build | tee /tmp/logging.txt"
 test:
   - run: dotnet restore
   - run: dotnet build
